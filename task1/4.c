@@ -11,10 +11,11 @@ void print_process_info() {
 int main() {
   printf("Parent process:    ");
   print_process_info();
-  for (int i = 0; i < 3; i++) {
-    pid_t pid = fork();
 
-    switch (pid) {
+  for (int i = 0; i < 3; ++i) {
+    pid_t child_pid = fork();
+
+    switch (child_pid) {
       case -1:
         perror("fork failed");
         exit(EXIT_FAILURE);
@@ -22,12 +23,15 @@ int main() {
       case 0:
         printf("Child process %d:    ", i + 1);
         print_process_info();
+        sleep(0.5);
         break;
       default:
-        sleep(0.5);
+        wait(NULL);
         break;
     }
   }
+
+  sleep(2);
 
   return 0;
 }
