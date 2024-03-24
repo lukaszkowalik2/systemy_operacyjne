@@ -1,9 +1,14 @@
+/*
+  Program ten ma za zadanie wypisać identyfikatory UID, GID, PID, PPID i PGID dla bieżącego procesu.
+  ----------------------------------------------------------------------
+  Autor: Łukasz Kowalik
+  ----------------------------------------------------------------------
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-int main()
-{
+int main() {
   int pid = getpid();
   int gid = getgid();
   int uid = getuid();

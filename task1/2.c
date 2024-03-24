@@ -1,3 +1,10 @@
+/*
+  Program ten korzyssta z funkcji fork, która jest wywoływana w trzy razy w funkcji for w celu utworzenia procesów potomnych. Następnie dla każdego oraz dla procesu macierzystego wypisuje identyfikatory UID, GID, PID, PPID i PGID. Została użyta funkcja `wait`, która zapewnia,aby proces macierzysty zaczekał na zakończenia procesów potomnych.
+  ----------------------------------------------------------------------
+  Autor: Łukasz Kowalik
+  ----------------------------------------------------------------------
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
