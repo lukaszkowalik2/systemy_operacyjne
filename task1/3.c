@@ -31,7 +31,7 @@ int main() {
         print_process_info();
         break;
       default:
-        sleep(0.5);
+        sleep(1);
         break;
     }
   }

@@ -30,7 +30,6 @@ int main() {
         setpgid(0, 0);
         printf("Child process %d:    ", i + 1);
         print_process_info();
-        sleep(1);
         printf("Child process with new id %d:    ", i + 1);
         print_process_info();
         break;

@@ -20,9 +20,9 @@ int main() {
   print_process_info();
 
   for (int i = 0; i < 3; ++i) {
-    pid_t child_pid = fork();
+    pid_t pid = fork();
 
-    switch (child_pid) {
+    switch (pid) {
       case -1:
         perror("fork failed");
         exit(EXIT_FAILURE);
