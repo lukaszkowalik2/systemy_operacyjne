@@ -12,7 +12,13 @@
 #include <unistd.h>
 
 void print_process_info() {
-  printf("UID: %d, GID: %d, PID: %d, PPID: %d, PGID: %d\n", getuid(), getgid(), getpid(), getppid(), getpgid(0));
+  int pid = getpid();
+  int gid = getgid();
+  int uid = getuid();
+  int ppid = getppid();
+  int pgid = getpgid(0);
+
+  printf("UID: %d, GID: %d, PID: %d, PPID: %d, PGID: %d\n", uid, gid, pid, ppid, pgid);
 }
 
 int main() {

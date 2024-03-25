@@ -13,10 +13,9 @@ int main() {
   int gid = getgid();
   int uid = getuid();
   int ppid = getppid();
-  int pgid = getpgid(pid);
-  int pgrp = getpgrp();
+  int pgid = getpgid(0);
 
-  fprintf(stderr, "pid=%d; gid=%d; uid=%d; ppid=%d; pgid=%d; pgrp=%d\n", pid, gid, uid, ppid, pgid, pgrp);
+  printf("UID: %d, GID: %d, PID: %d, PPID: %d, PGID: %d\n", uid, gid, pid, ppid, pgid);
 
   exit(EXIT_SUCCESS);
 }
