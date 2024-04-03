@@ -1,0 +1,33 @@
+========================================================================
+Autor: ŁUKASZ KOWALIK,                                       24.03.2023
+========================================================================
+
+* Zawartosc:
+============
+
+Katalog zawiera dwa porgramy które są potrzebne do uruchomienia zadania nr. 2:
+--------------------------------------------------------------------
+
+1.c - Prograrm ten korzysta z funckji fork, która jest wywoływana trzy razy w funkcji for w celu utworzenia procesów potomnych. W każdej iteracji for`a są wypisywane komunikaty procesów takie jak UID, GID, PID, PPID, PGID poprzez uruchaniamie programu podanego do funckji execlp. Program który ma być uruchamiany jest podawany przez argumenty programu macierzystego
+2.c - Program który wypisuje komunikaty procesów takie jak UID, GID, PID, PPID, PGID
+
+* Jak uruchomic programy:
+=========================
+
+Katalog zawiera program Makefile do kompilacji, linkowania
+i uruchamiania powyzszych programow, a takze czyszczenia katalogu 
+i jego archiwizacji.
+
+-> Aby uruchomic program, nalezy wykonac komende:
+       make run
+
+-> Aby wyczyscic zawartosc katalogu (usunac zbedne pliki), nalezy wykonac:
+       make clean
+
+-> W celu archiwizacji oraz kompresji katalogu nalezy wykonac:
+       make tar
+
+========================================================================
+
+
+
