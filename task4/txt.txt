@@ -1,0 +1,15 @@
+ przypadku poprawnego wykonania, funkcja pipe zwraca dwa deskryptory plik´ow:
+filedes[0] i filedes[1], kt´ore odnosz ,a si ,e do dw´och strumieni danych. W obecnych
+wersjach systemu UNIX, funkcja pipe nierzadko wyst ,epuje w dw´och odmianach. Jedna
+z nich slu˙zy do tworzenia potok´ow jednokierunkowych (p´oldupleks), a druga do tworzenia
+potok´ow dwukierunkowych (pelny dupleks). To, kt´ora z nich jest wywolywana domy´slnie,
+zale˙zy od ustawie´n systemowych – najlepiej sprawdzi´c to w man pipe. W pe lnym dupleksie
+oba deskryptory mog ,a by´c u˙zyte zar´owno do zapisu, jak i odczytu: je´sli filedes[0] slu˙zy
+do zapisu danych, to filedes[1] slu˙zy do ich odczytu lub na odwr´ot. Natomiast w kon-
+figuracji p´o ldupleksowej filedes[1] jest zawsze u˙zywany do zapisu, a filedes[0] zawsze
+do odczytu – pr´oba u˙zycia ich na odwr´ot ko´nczy si ,e bl ,edem. Linux stosuje rozwi ,azanie
+p´oldupleksowe. Od wersji j ,adra o numerze 2.6.27 w Linuksie dost ,epna jest r´ownie˙z spe-
+cyficzna dla tego systemu funkcja pipe2 – szczeg´oly mo˙zna znale´z´c w man 2 pipe.
+! Uwaga: Proces powinien zamyka´c (najlepiej na samym pocz ,atku) koniec potoku,
+kt´orego nie b ,edzie u˙zywal (tzn. zwalnia´c odpowiedni desktryptor funkcj ,a close) – nie
+jest to konieczne, ale mo˙ze uchroni´c przed ewentualnymi b l ,edami
