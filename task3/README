@@ -1,0 +1,49 @@
+========================================================================
+Autor: ŁUKASZ KOWALIK,                                       12.04.2023
+========================================================================
+
+* Zawartosc:
+============
+
+Katalog programy zawiera pieć programów które były podpuntami ćwiczenia pierwszego:
+--------------------------------------------------------------------
+
+1.c - Program ma na celu i wykonanie operacji domyślnej przy kliknięciu Ctrl + \, zignorowanie sygnału przy kliknięciu Ctrl+C oraz wykonanie własnej akcji przy kliknięciu Ctrl+Z.
+2.c - Program uruchamia program 1.c poprzez funckje execlp w procesie potomnym innego procesu stworzonego poprzez funckje `fork`. Wysyła on do tego procesu sygnał SIGQUIT.
+3.c - Program w procesie macierzystym tworzy proces potomny poprzez funckje `fork` i sprawia aby stał się on lidreme grupy a następnie wywołuje funckje execlp która uruchamia program 4.c. Następnie z pierwszego procesu macierzystego wysyła sygnały do całej grupy procesów protomych po uprzednim sprawdzeniu czy istnieją. Proces będący liderem grupy procesów ignoruje sygnały a ana końcu czeka na zakońćzenie wzystkich swoich pocesów potomnych.
+4.c - Program wywołuje 3 razy funkcję `fork` która wywołuje pierwszy program poprzez `execlp`.
+
+------------------------------------------------------------------------
+* Ile proces´ów powstanie przy n-krotnym wywolaniu funkcji fork i dlaczego?
+  - Powstanie 2^n. Ponieważ procer nadrzędny dzieli się na dwa procesy. Jednym z nich jest procer macierzysty a drugim proces potomny. Kolejne wywołanie wytworzy kolejne dwa procesy potomne.
+
+------------------------------------------------------------------------
+
+* Jak uruchomic programy:
+=========================
+
+Katalog zawiera program Makefile do kompilacji, linkowania
+i uruchamiania powyzszych programow, a takze czyszczenia katalogu 
+i jego archiwizacji.
+
+-> Aby uruchomic 1-szy program, nalezy wykonac komende:
+       make run_1
+
+
+-> Aby uruchomic 2-szy program, nalezy wykonac komende:
+       make run_2
+
+
+-> Aby uruchomic 3-szy program, nalezy wykonac komende:
+       make run_3
+
+-> Aby wyczyscic zawartosc katalogu (usunac zbedne pliki), nalezy wykonac:
+       make clean
+
+-> W celu archiwizacji oraz kompresji katalogu nalezy wykonac:
+       make tar
+
+========================================================================
+
+
+

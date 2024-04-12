@@ -1,33 +1,38 @@
 #include <signal.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-void handler(int);
+// Program ma na celu i wykonanie operacji domyślnej przy kliknięciu Ctrl + \, zignorowanie sygnału przy kliknięciu Ctrl+C oraz wykonanie własnej akcji przy kliknięciu Ctrl+Z.
 
-int main() {
+typedef void (*sighandler_t)(int);
+
+void custom_handler() {
+  printf("\n Moja akcja\n");
+
   int pid = getpid();
-  printf("---------------------------------------------------");
-  printf("PID: %d", pid);
-  printf("---------------------------------------------------");
-  signal(SIGINT, handler);
-  while (true) {
-    pause();
-  }
-  exit(EXIT_SUCCESS);
+  int gid = getgid();
+  int uid = getuid();
+  int ppid = getppid();
+  int pgid = getpgid(0);
+
+  printf("UID: %d, GID: %d, PID: %d, PPID: %d, PGID: %d\n", uid, gid, pid, ppid, pgid);
 }
 
-void handler(int sig) {
-  char c;
+int main() {
+  sighandler_t stp = signal(SIGTSTP, custom_handler);  // Ctrl+Z
+  sighandler_t sigint = signal(SIGINT, SIG_IGN);       // Ctrl+C
+  sighandler_t quit = signal(SIGQUIT, SIG_DFL);        // Ctrl+\/
 
-  signal(sig, SIG_IGN);
-  printf("\n Do you really want to quit? [y/n]");
-  c = getchar();
-  if (c == 'y' || c == 'Y') {
-    exit(EXIT_SUCCESS);
-  } else {
-    signal(SIGINT, handler);
+  if (stp == SIG_ERR || sigint == SIG_ERR || quit == SIG_ERR) {
+    perror("signal");
+    exit(EXIT_FAILURE);
   }
-  getchar();
+
+  printf("PID: %d\n", getpid());
+  printf("Oczekiwanie na sygnały...\n");
+
+  pause();
+
+  exit(EXIT_SUCCESS);
 }
