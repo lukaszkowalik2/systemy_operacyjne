@@ -14,10 +14,6 @@ Katalog programy zawiera pieć programów które były podpuntami ćwiczenia pie
 4.c - Program wywołuje 3 razy funkcję `fork` która wywołuje pierwszy program poprzez `execlp`.
 
 ------------------------------------------------------------------------
-* Ile proces´ów powstanie przy n-krotnym wywolaniu funkcji fork i dlaczego?
-  - Powstanie 2^n. Ponieważ procer nadrzędny dzieli się na dwa procesy. Jednym z nich jest procer macierzysty a drugim proces potomny. Kolejne wywołanie wytworzy kolejne dwa procesy potomne.
-
-------------------------------------------------------------------------
 
 * Jak uruchomic programy:
 =========================
