@@ -16,7 +16,7 @@ int main() {
     switch (child_pid) {
       case -1:
         perror("fork");
-        exit(1);
+        exit(EXIT_FAILURE);
       case 0:
         err = execlp("output/1", "output/1", NULL);
         if (err == -1) {

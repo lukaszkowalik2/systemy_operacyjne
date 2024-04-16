@@ -19,14 +19,14 @@ int main(int argc, char *argv[]) {
   switch (pid) {
     case -1: {
       perror("fork");
-      exit(1);
+      exit(EXIT_FAILURE);
       break;
     }
     case 0: {
       pid_t setpgid_pid = setpgid(0, 0);
       if (setpgid_pid < 0) {
         perror("setpgid");
-        exit(1);
+        exit(EXIT_FAILURE);
       }
       sighandler_t stp = signal(SIGTSTP, SIG_IGN);  // Ctrl+Z
       if (stp == SIG_ERR) {
@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
       pid_t pgid = getpgid(pid);
       if (pgid < 0) {
         perror("getpgid");
-        exit(1);
+        exit(EXIT_FAILURE);
       }
       pid_t setpgid_pid = kill(-pgid, 0);
       if (setpgid_pid == 0) {
@@ -72,5 +72,5 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  return 0;
+  exit(EXIT_SUCCESS);
 }
