@@ -2,11 +2,11 @@ OUTPUT_DIR = output
 CC = gcc
 CFLAGS = -Wall -pedantic -O 
 DIR = $(notdir $(CURDIR))
-OUTPUT_TAR = Zadanie3.tar.gz
+OUTPUT_TAR = Zadanie4.tar.gz
 INPUT = input.txt
 OUTPUT = output.txt
 
-SOURCES = 1.c 2.c 3.c
+SOURCES = 1.c
 EXECUTABLES = $(SOURCES:%.c=$(OUTPUT_DIR)/%)
 
 all: $(EXECUTABLES)
