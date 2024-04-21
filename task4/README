@@ -1,0 +1,33 @@
+========================================================================
+Autor: ŁUKASZ KOWALIK,                                       21.04.2023
+========================================================================
+
+* Zawartosc:
+============
+
+Katalog programy zawiera program:
+--------------------------------------------------------------------
+
+1.c - Program implementuje problem "Producenta i konsumenta" przy użyciu potoków nienazwanych. Producent pobiera surowiec z pliku tekstowego za pomocą funkcji `read`, a konsument pobiera surowiec z potoku również za pomocą funkcji `read` i zapisuje go do pliku tekstowego za pomocą funkcji `write`. Dodatkowo, program symuluje różną szybkość działania za pomocą funkcji `sleep`. Po wykonaniu akcji program zamyka potok oraz otwarte pliki. Po zakończeniu programu oba pliki tekstowe powinny być identyczne, co jest sprawdzane za pomocą polecenia `diff -s`.
+
+------------------------------------------------------------------------
+
+* Jak uruchomic programy:
+=========================
+
+Katalog zawiera program Makefile do kompilacji, linkowania
+i uruchamiania powyzszych programow, a takze czyszczenia katalogu 
+i jego archiwizacji.
+
+-> Aby uruchomic program, nalezy wykonac komende:
+       make run
+
+-> Aby wyczyscic zawartosc katalogu (usunac zbedne pliki), nalezy wykonac:
+       make clean
+
+-> W celu archiwizacji oraz kompresji katalogu nalezy wykonac:
+       make tar
+
+========================================================================
+
+
