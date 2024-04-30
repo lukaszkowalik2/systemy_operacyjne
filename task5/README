@@ -1,0 +1,25 @@
+======================================================================== Autor: ŁUKASZ KOWALIK, 30.04.2023 ========================================================================
+
+- # Zawartosc:
+
+## Katalog programy zawiera program:
+
+1.c - Program tworzy potok FIFO z pizomu programu, a następnie uruchamia procesy Producenta i Konsumenta w tym samym programie. Potok jest usuwany za pomocą funkcji `atexit` 
+read_from_pipe.c - Program odczytuje z potoku informacje i zapisuje je do pliku. 
+write_to_pipe.c - Program odczytuje informacje z pliku i zapisuje je do potoku.
+
+---
+
+- # Jak uruchomic programy:
+
+Katalog zawiera program Makefile do kompilacji, linkowania i uruchamiania powyzszych programow, a takze czyszczenia katalogu i jego archiwizacji.
+
+-> Aby uruchomic pierwszy program, nalezy wykonac komende: make run_1
+
+-> Aby uruchomic drugi program, nalezy wykonac komende: make run_2
+
+-> Aby wyczyscic zawartosc katalogu (usunac zbedne pliki), nalezy wykonac: make clean
+
+-> W celu archiwizacji oraz kompresji katalogu nalezy wykonac: make tar
+
+========================================================================
