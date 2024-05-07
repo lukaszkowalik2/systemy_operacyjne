@@ -13,6 +13,8 @@ int main(int argc, char *argv[]) {
     perror("mq_open server");
     exit(EXIT_FAILURE);
   }
+  // https://stackoverflow.com/questions/3056307/how-do-i-use-mqueue-in-a-c-program-on-a-linux-based-system
+  mq_close(mq);
   mq_unlink(QUEUE_NAME);
   exit(EXIT_SUCCESS);
 }
