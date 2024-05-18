@@ -23,8 +23,8 @@ run_1: clean $(OUTPUT_DIR)/1
 run_2: clean ${OUTPUT_DIR}/write_to_pipe ${OUTPUT_DIR}/read_from_pipe
 	touch ${OUTPUT}
 	mkfifo ${OUTPUT_DIR}/fifo
-	xterm -hold -title "Producent" -e ./$(OUTPUT_DIR)/write_to_pipe ${INPUT} ./${OUTPUT_DIR}/fifo &
-	xterm -hold -title "Konsument" -e ./$(OUTPUT_DIR)/read_from_pipe ${OUTPUT} ./${OUTPUT_DIR}/fifo &
+	xterm -title "Producent" -e ./$(OUTPUT_DIR)/write_to_pipe ${INPUT} ./${OUTPUT_DIR}/fifo &
+	xterm -title "Konsument" -e ./$(OUTPUT_DIR)/read_from_pipe ${OUTPUT} ./${OUTPUT_DIR}/fifo &
 
 clean:
 	rm -rf $(OUTPUT_DIR)
