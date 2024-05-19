@@ -2,9 +2,11 @@
 
 #include <errno.h>
 #include <fcntl.h>
+#include <semaphore.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 sem_t *create_semaphore(const char *name, unsigned int value) {
   sem_t *sem = sem_open(name, O_CREAT | O_EXCL, 0666, value);
@@ -62,4 +64,23 @@ int unlink_semaphore(const char *name) {
     return 0;
   }
   return 1;
+}
+
+sem_wait_status wait_for_semaphore_with_timeout(sem_t *sem, int timeout_sec) {
+  struct timespec ts;
+  if (clock_gettime(CLOCK_REALTIME, &ts) == -1) {
+    perror("clock_gettime");
+    return SEM_WAIT_ERROR;
+  }
+  ts.tv_sec += timeout_sec;
+
+  int ret = sem_timedwait(sem, &ts);
+  if (ret == 0) {
+    return SEM_WAIT_SUCCESS;
+  } else if (errno == ETIMEDOUT) {
+    return SEM_WAIT_TIMEOUT;
+  } else {
+    perror("sem_timedwait");
+    return SEM_WAIT_ERROR;
+  }
 }

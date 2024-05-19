@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include <unistd.h>
 
 #include "../include/semaphores.h"
@@ -35,13 +36,27 @@ int main() {
 
   char item[NELE];
   while (buffer->wstaw != -1) {
-    sem_wait(sem_cons);
-    strncpy(item, buffer->bufor[buffer->wyjmij], NELE);
-    buffer->wyjmij = (buffer->wyjmij + 1) % NBUF;
-    printf("Odebrano z shm: %s\n", item);
-    // item[NELE - 1] = '\0';
-    write(output_file, item, strlen(item));
-    sem_post(sem_prod);
+    sem_wait_status status = wait_for_semaphore_with_timeout(sem_cons, 3);
+
+    if (status == SEM_WAIT_SUCCESS) {
+      strncpy(item, buffer->bufor[buffer->wyjmij], NELE);
+      buffer->wyjmij = (buffer->wyjmij + 1) % NBUF;
+      printf("Odebrano z shm: %s\n", item);
+      write(output_file, item, strlen(item));
+      sem_post(sem_prod);
+    } else if (status == SEM_WAIT_TIMEOUT) {
+      buffer->wstaw = -1;
+    } else {
+      perror("wait_for_semaphore_with_timeout");
+      exit(EXIT_FAILURE);
+    }
+
+    // sem_wait(sem_cons);
+    // strncpy(item, buffer->bufor[buffer->wyjmij], NELE);
+    // buffer->wyjmij = (buffer->wyjmij + 1) % NBUF;
+    // printf("Odebrano z shm: %s\n", item);
+    // write(output_file, item, strlen(item));
+    // sem_post(sem_prod);
 
     sleep(1);
   }
