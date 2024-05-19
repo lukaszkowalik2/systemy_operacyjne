@@ -1,44 +1,56 @@
 #include <fcntl.h>
-#include <semaphore.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/mman.h>
+#include <string.h>
 #include <unistd.h>
 
-#define NELE 20
-#define NBUF 5
-
-typedef struct {
-  char bufor[NBUF][NELE];
-  int wstaw, wyjmij;
-} SegmentPD;
+#include "../include/semaphores.h"
+#include "../include/shared_buffer.h"
+#include "../include/shared_memory.h"
 
 int main() {
-  int des = shm_open("/segment", O_RDWR, 0777);
-  if (des == -1) {
-    perror("shm_open");
+  int shm_fd = open_shared_memory(SHM_NAME, sizeof(SegmentPD));
+  if (shm_fd == -1) {
     exit(EXIT_FAILURE);
   }
-  SegmentPD *wpd = (SegmentPD *)mmap(NULL, sizeof(SegmentPD), PROT_READ | PROT_WRITE, MAP_SHARED, des, 0);
+  SegmentPD* buffer = (SegmentPD*)map_shared_memory(shm_fd, sizeof(SegmentPD));
+  if (buffer == NULL) {
+    close_shared_memory(shm_fd);
+    exit(EXIT_FAILURE);
+  }
 
-  FILE *file;
-  char line[NELE];
-  file = fopen("output.txt", "w");
+  sem_t* sem_prod = open_semaphore(SEM_WRITE_TO_SHM);
+  sem_t* sem_cons = open_semaphore(SEM_READ_FROM_SHM);
+  if (sem_prod == NULL || sem_cons == NULL) {
+    unmap_shared_memory(buffer, sizeof(SegmentPD));
+    exit(EXIT_FAILURE);
+  }
+
+  FILE* file = fopen("./input.txt", "r");
   if (file == NULL) {
     perror("fopen");
     exit(EXIT_FAILURE);
   }
 
-  while (1) {
-    while (wpd->wstaw == wpd->wyjmij) {
-      printf("Nie wstawia\n");
-      sleep(1);
-    }
-    fprintf(file, "%s", wpd->bufor[wpd->wyjmij % NBUF]);
-    wpd->wyjmij++;
+  char item[NELE];
+  while (fgets(item, NELE, file) != NULL) {
+    sem_wait(sem_prod);
+    printf("Wysłano do shm: %s\n", item);
+    strncpy(buffer->bufor[buffer->wstaw], item, NELE);
+    buffer->wstaw = (buffer->wstaw + 1) % NBUF;
+    sem_post(sem_cons);
+
+    sleep(rand() % 2);
   }
+  // sleep(2);
+  // buffer->wstaw = -1;
 
   fclose(file);
-  munmap(wpd, sizeof(SegmentPD));
-  close(des);
+
+  close_semaphore(sem_prod);
+  close_semaphore(sem_cons);
+  unmap_shared_memory(buffer, sizeof(SegmentPD));
+  close_shared_memory(shm_fd);
+
+  return 0;
 }

@@ -1,26 +1,35 @@
 OUTPUT_DIR = output
 
-CFLAGS = -Wall -pedantic -O 
-LFLAGS = -Wall -pedentic -O
-LDLIBS = -lm -lrt
+CFLAGS = -Wall -pedantic -O -Iinclude
+LFLAGS = -Wall -pedantic -O
+LDLIBS = -lm -lrt -pthread
 
 CC = gcc
-LD = ${CC}
+LD = $(CC)
 
 DIR = $(notdir $(CURDIR))
 OUTPUT_TAR = Zadanie7.tar.gz
 
-SOURCES = 1.c read_from_shm.c write_to_shm.c
+SOURCES = write_to_shm.c read_from_shm.c main.c src/semaphores.c src/shared_memory.c
 EXECUTABLES = $(SOURCES:%.c=$(OUTPUT_DIR)/%)
 
-all: $(EXECUTABLES)
+all: $(OUTPUT_DIR)/main $(OUTPUT_DIR)/write_to_shm $(OUTPUT_DIR)/read_from_shm
 
-$(OUTPUT_DIR)/%: %.c
+$(OUTPUT_DIR):
 	mkdir -p $(OUTPUT_DIR)
-	$(CC) $(CFLAGS) ${LDLIBS} $< -o $@
 
-run: $(OUTPUT_DIR)/1 ${OUTPUT_DIR}/read_from_shm ${OUTPUT_DIR}/write_to_shm
-	./$(OUTPUT_DIR)/1
+$(OUTPUT_DIR)/main: main.c src/semaphores.c src/shared_memory.c | $(OUTPUT_DIR)
+	$(CC) $(CFLAGS) main.c src/semaphores.c src/shared_memory.c -o $@ $(LDLIBS)
+
+$(OUTPUT_DIR)/write_to_shm: write_to_shm.c src/semaphores.c src/shared_memory.c | $(OUTPUT_DIR)
+	$(CC) $(CFLAGS) write_to_shm.c src/semaphores.c src/shared_memory.c -o $@ $(LDLIBS)
+
+$(OUTPUT_DIR)/read_from_shm: read_from_shm.c src/semaphores.c src/shared_memory.c | $(OUTPUT_DIR)
+	$(CC) $(CFLAGS) read_from_shm.c src/semaphores.c src/shared_memory.c -o $@ $(LDLIBS)
+
+run: $(OUTPUT_DIR)/main $(OUTPUT_DIR)/write_to_shm $(OUTPUT_DIR)/read_from_shm
+	./$(OUTPUT_DIR)/main
+	diff -s ./input.txt ./output.txt
 
 .PHONY: all clean tar
 
@@ -28,4 +37,4 @@ clean:
 	rm -rf $(OUTPUT_DIR)
 
 tar: clean
-	(cd ../; tar -cvzf $(OUTPUT_TAR)  $(DIR) )
+	(cd ../; tar -cvzf $(OUTPUT_TAR) $(DIR))
