@@ -1,4 +1,3 @@
-
 #ifndef SHARED_BUFFER_H
 #define SHARED_BUFFER_H
 

@@ -1,0 +1,27 @@
+======================================================================== Autor: ŁUKASZ KOWALIK, 20.05.2023 ========================================================================
+
+- # Zawartosc:
+
+## Katalog programy zawiera program:
+
+main.c - Plik zawiera główny kod programu. Jest to plik, który uruchamia procesy producenta i konsumenta oraz zarządza nimi. Tworzy i inicjuje pamięć dzieloną oraz semafory, a następnie uruchamia procesy potomne. Oczekuję na zakońćzenie procesów potomnych i wykonuje odpowiednie prządki, takie jak
+usuwanie obiektów pamięci dzielonej i semaforów. write_to_shm.c - Plik zawiera kod producenta. Producent zajmuje się odczytem danych z pliku `input.txt` i zapisem ich do pamięci dzielonej. Wykorzystuje semafory do synchonizacji dostępu do bufora. read_from_shm.c - Plik zawiera kod konsumenta.
+Konsument pobiera dane z pamięci dzielonej i zapisuje je do pliku `output.txt`. Także wykorzystuje semefory do synchronizacji dostępu do bufora. src/semaphores.c - Plik zawiera implementację operacji na semaforach, takich jak tworzenie, otwieranie, zamykanie, podnoszenie i opuszczanie semaforów.
+Funkcje z tego pliku są wykorzystywane do synchronizacji dostępu do pamięci dzielonej. include/semaphores.h - Plik nagłówkowy semaphores.h zawiera deklaracje funkcji obsługujących semafory, które są wykorzystywane w innych plikach źródłowych. Definiuje interfejsy operacji na semaforach.
+src/shared_memory.c - Plik zawiera implementację operacji na pamięci dzielonej, takich jak tworzenie, alokowanie, mapowanie i zwalnianie pamięci dzielonej. Funkcje z tego pliku są wykorzystywane do zarządzania buforem danych w pamięci współdzielonej. include/shared_memory.h - Plik nagłówkowy
+shared_memory.h zawiera deklaracje funkcji obsługujących pamięć dzieloną, które są wykorzystywane w innych plikach źródłowych. Definiuje interfejsy operacji na pamięci dzielonej. include/shared_buffer.h - Plik zawiera deklaracje stałych, struktury danych oraz definicje nazw semaforów i nazw pamięci
+dzielonej używanych w programie.
+
+---
+
+- # Jak uruchomic programy:
+
+Katalog zawiera program Makefile do kompilacji, linkowania i uruchamiania powyzszych programow, a takze czyszczenia katalogu i jego archiwizacji.
+
+-> Aby uruchomic pierwszy program, nalezy wykonac komende: make run
+
+-> Aby wyczyscic zawartosc katalogu (usunac zbedne pliki), nalezy wykonac: make clean
+
+-> W celu archiwizacji oraz kompresji katalogu nalezy wykonac: make tar
+
+========================================================================
