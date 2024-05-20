@@ -1,18 +1,65 @@
-#include <fcntl.h>
-#include <mqueue.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/stat.h>
+#include <unistd.h>
 
-#include "mylib.h"
+#include "./include/message_queue.h"
 
-int main(int argc, char *argv[]) {
-  mqd_t mq = mq_open(QUEUE_NAME, O_WRONLY);
-  if (mq == -1) {
-    perror("mq_open client");
+void handle_sigint(int sig) {
+  printf("\nWyjście...\n");
+  exit(EXIT_SUCCESS);
+}
+
+Queue client_queue;
+Queue server_queue;
+
+void close_queue_on_exit() {
+  remove_queue(&client_queue);
+  close_queue(&server_queue);
+}
+
+int main() {
+  signal(SIGINT, handle_sigint);
+  atexit(close_queue_on_exit);
+
+  char queue_name[QUEUE_NAME_LENGTH];
+  snprintf(queue_name, QUEUE_NAME_LENGTH, "/%d", getpid());
+  if (!create_queue(&client_queue, queue_name)) {
+    fprintf(stderr, "Błąd podczas tworzenia kolejki klienta\n");
     exit(EXIT_FAILURE);
   }
 
-  // mq_close(QUEUE_NAME);
-  exit(EXIT_SUCCESS);
+  if (!open_queue(&server_queue, QUEUE_NAME)) {
+    fprintf(stderr, "Błąd podczas otwierania kolejki serwera\n");
+    exit(EXIT_FAILURE);
+  } else {
+    printf("Klient zainicjowany z PID: %d\n", getpid());
+  }
+
+  char expression[MAX_EXPRESSION_LENGTH];
+  printf("Wprowadź wyrażenie arytmetyczne (np. 2+3): ");
+  while (fgets(expression, MAX_EXPRESSION_LENGTH, stdin) != NULL) {
+    char message[MAX_EXPRESSION_LENGTH + 50];
+    snprintf(message, sizeof(message), "/%d %s", getpid(), expression);
+
+    printf("Wysyłanie wyrażenia: %s", message);
+    if (!send_message(&server_queue, message)) {
+      fprintf(stderr, "Błąd podczas wysyłania wiadomości do serwera\n");
+      break;
+    }
+
+    char response[MAX_EXPRESSION_LENGTH];
+    if (!receive_message(&client_queue, response)) {
+      fprintf(stderr, "Błąd podczas odbierania wiadomości od serwera\n");
+      break;
+    }
+
+    printf("Wynik: %s\n", response);
+    printf("Wprowadź wyrażenie arytmetyczne (np. 2+3): ");
+  }
+
+  remove_queue(&client_queue);
+  close_queue(&server_queue);
+
+  return 0;
 }

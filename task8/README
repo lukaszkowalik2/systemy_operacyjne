@@ -1,0 +1,25 @@
+======================================================================== Autor: ŁUKASZ KOWALIK, 20.05.2023 ========================================================================
+
+- # Zawartosc:
+
+## Katalog programy zawiera program:
+
+server.c - Plik zawiera kod serwera, który tworzy kolejkę komunikatów o nazwie `/server_queue` w trybie odbierania. Serwer obsługuje kominkaty od klientów, pobierając z nich nazwę kojeki klienta oraz wyrażenie arytetyczne. Następnie wykonuje żadane wyrażenie artymetyczne i wysyła z powrotem do
+klienta. clint.c - PLik zawiera kod klientam który tworzy swoją kolejkę komunikatów o nazwie `/PID` gdzie `PID` to id procesu klienta. Klient odbiera kolejkę komunikatów w trybie nadawania. Wysyła on żadnanie do serwera i oczekuje na odpowiedź. Gdy odpowiedz dotrze do klienta to wypisują ją na
+ekran. src/message_queue.c - Plik zawiera implementacje funkcji bibliotecznuch do obsługi kolejek komunikatów. Funkcja `create_queue` tworzy kolejkę komunikatów, a `open_queue` otwiera istniejącą kolejkę. Funkcja `send_message` wysyła wiadomość do kolejki, a `receive_message` odbiera wiadomość z
+kolejki. Dodatkowo `close_queue` zamyka kolejkę, a `remove_queue` usuwa ją z systemu. include/message_queue.h - Plik deklaruje funkcje do obsługi kolejek komunikatów, takie jak `create_queue`, `open_queue`, `send_message`, `receive_message`, `close_queue` i `remove_queue`. Zawiera również definicje
+struktur oraz stałych używanych w implementacji kolejek komunikatów.
+
+---
+
+- # Jak uruchomic programy:
+
+Katalog zawiera program Makefile do kompilacji, linkowania i uruchamiania powyzszych programow, a takze czyszczenia katalogu i jego archiwizacji.
+
+-> Aby uruchomic pierwszy program, nalezy wykonac komende: make run
+
+-> Aby wyczyscic zawartosc katalogu (usunac zbedne pliki), nalezy wykonac: make clean
+
+-> W celu archiwizacji oraz kompresji katalogu nalezy wykonac: make tar
+
+========================================================================
