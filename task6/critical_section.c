@@ -6,7 +6,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "semaphores.h"
+#include "./include/semaphores.h"
 
 #define MAX_SLEEP_TIME 2
 
@@ -43,8 +43,7 @@ int main(int argc, char *argv[]) {
       exit(EXIT_FAILURE);
     }
 
-    number = atoi(buffer);
-    number += 1;
+    number = atoi(buffer) + 1;
 
     lseek(fd, 0, SEEK_SET);
     if (dprintf(fd, "%d\n", number) < 0) {

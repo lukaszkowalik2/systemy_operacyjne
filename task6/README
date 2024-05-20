@@ -1,0 +1,28 @@
+======================================================================== Autor: ŁUKASZ KOWALIK, 20.05.2023 ========================================================================
+
+- # Zawartosc:
+
+## Katalog programy zawiera program:
+
+multiplier.c: Ten plik jest odpowiedzialny za zarządzanie procesami, które realizują wzajemne wykluczanie. Tworzy i uruchamia procesy potomne (critical_section) z odpowiednią liczbą sekcji krytycznych. Po zakończeniu wszystkich procesów potomnych, sprawdza końcową wartość liczby w pliku `numer.txt`
+i wyświetla ją.
+
+critical_section.c: Plik zawiera implementację sekcji krytycznej, która zapisuje i zwiększa wartość liczby w pliku `numer.txt`. Wykorzystuje semafory do zapewnienia bezpiecznego dostępu do pliku przez różne procesy.
+
+src/semaphores.c: Ten plik zawiera implementację funkcji obsługi semaforów, takich jak tworzenie, otwieranie, uzyskiwanie wartości, operowanie, zamykanie i usuwanie semaforów. Wykorzystuje interfejs semaforów POSIX.
+
+include/semaphores.h: Plik nagłówkowy definiujący interfejs funkcji obsługi semaforów, zawierający deklaracje funkcji z pliku `semaphores.c`, definicje stałych związanych z semaforami oraz typy danych używane w operacjach na semaforach.
+
+---
+
+- # Jak uruchomic programy:
+
+Katalog zawiera program Makefile do kompilacji, linkowania i uruchamiania powyzszych programow, a takze czyszczenia katalogu i jego archiwizacji.
+
+-> Aby uruchomic pierwszy program, nalezy wykonac komende: make run
+
+-> Aby wyczyscic zawartosc katalogu (usunac zbedne pliki), nalezy wykonac: make clean
+
+-> W celu archiwizacji oraz kompresji katalogu nalezy wykonac: make tar
+
+========================================================================

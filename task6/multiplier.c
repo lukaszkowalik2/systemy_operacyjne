@@ -6,7 +6,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#include "semaphores.h"
+#include "./include/semaphores.h"
 
 void cleanup() {
   unlink_semaphore();

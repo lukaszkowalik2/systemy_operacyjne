@@ -1,4 +1,4 @@
-#include "semaphores.h"
+#include "../include/semaphores.h"
 
 #include <errno.h>
 #include <fcntl.h>
