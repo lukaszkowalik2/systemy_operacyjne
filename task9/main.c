@@ -92,5 +92,5 @@ int main() {
     exit(EXIT_FAILURE);
   }
 
-  return 0;
+  exit(EXIT_SUCCESS);
 }
