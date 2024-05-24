@@ -4,7 +4,7 @@ CFLAGS = -Wall -pedantic -O
 DIR = $(notdir $(CURDIR))
 OUTPUT_TAR = Zadanie4.tar.gz
 
-SOURCES = 1.c
+SOURCES = main.c
 EXECUTABLES = $(SOURCES:%.c=$(OUTPUT_DIR)/%)
 
 all: $(EXECUTABLES)
