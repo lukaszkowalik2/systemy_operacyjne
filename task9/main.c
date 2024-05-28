@@ -21,8 +21,10 @@ void* thread_function(void* arg) {
   int thread_id = *((int*)arg);
 
   for (int i = 0; i < ITERATIONS; i++) {
+    pthread_mutex_lock(&mutex);
     gotoxy(1, thread_id + 1);
     printf("Wątek %d: sekcja prywatna\n", thread_id + 1);
+    pthread_mutex_unlock(&mutex);
     sleep(1);
 
     int lock_result = pthread_mutex_lock(&mutex);
@@ -31,6 +33,7 @@ void* thread_function(void* arg) {
       pthread_exit(NULL);
     }
 
+    pthread_mutex_lock(&mutex);
     gotoxy(XMAX, thread_id + 1);
     printf("Wątek %d: sekcja krytyczna\n", thread_id + 1);
     counter++;
@@ -41,8 +44,11 @@ void* thread_function(void* arg) {
       fprintf(stderr, "Błąd przy próbie odblokowania muteksu: %s\n", strerror(unlock_result));
       pthread_exit(NULL);
     }
+
+    pthread_mutex_lock(&mutex);
     gotoxy(1, thread_id + 1);
     printf("Wątek %d: sekcja prywatna\n", thread_id + 1);
+    pthread_mutex_unlock(&mutex);
     sleep(1);
   }
   pthread_exit(NULL);

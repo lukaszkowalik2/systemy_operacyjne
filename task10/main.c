@@ -38,7 +38,7 @@ void* thread_function(void* arg) {
 
     for (int other = 0; other < THREAD_COUNT; ++other) {
       while (choosing[other]);
-      while (tickets[other] != 0 && (tickets[other] < tickets[thread] || (tickets[other] == tickets[thread] && other < thread)));
+      while (tickets[other] != 0 && (tickets[other] < tickets[index] || (tickets[other] == tickets[index] && other < index)));
     }
 
     gotoxy(XMAX, thread + 1);
