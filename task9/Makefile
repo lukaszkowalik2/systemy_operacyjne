@@ -13,8 +13,8 @@ $(OUTPUT_DIR)/%: %.c
 	mkdir -p $(OUTPUT_DIR)
 	$(CC) $(CFLAGS) $< -o $@
 
-run: $(OUTPUT_DIR)/1
-	./$(OUTPUT_DIR)/1
+run: $(OUTPUT_DIR)/main
+	./$(OUTPUT_DIR)/main
 
 clean:
 	rm -rf $(OUTPUT_DIR)

@@ -11,7 +11,7 @@
 
 pthread_mutex_t mutex;
 
-int shared_counter = 0;
+int counter = 0;
 
 void gotoxy(unsigned x, unsigned y) {
   printf("\033[%d;%dH\033[2K", y, x);
@@ -34,10 +34,8 @@ void* thread_function(void* arg) {
 
     gotoxy(XMAX, thread_id + 1);
     printf("Wątek %d: sekcja krytyczna\n", thread_id + 1);
-    private_counter = shared_counter;
-    private_counter++;
+    counter++;
     sleep(1);
-    shared_counter = private_counter;
 
     int unlock_result = pthread_mutex_unlock(&mutex);
     if (unlock_result != 0) {
@@ -79,8 +77,8 @@ int main() {
     }
   }
 
-  printf("\nWartość wspólnego licznika: %d\n", shared_counter);
-  if (shared_counter == NUM_THREADS * ITERATIONS) {
+  printf("\nWartość wspólnego licznika: %d\n", counter);
+  if (counter == NUM_THREADS * ITERATIONS) {
     printf("Wartość jest poprawna.\n");
   } else {
     printf("Wartość jest niepoprawna.\n");
