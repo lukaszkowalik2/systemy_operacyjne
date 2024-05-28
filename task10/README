@@ -1,0 +1,21 @@
+======================================================================== Autor: ŁUKASZ KOWALIK, 27.05.2023 ========================================================================
+
+- # Zawartosc:
+
+## Katalog programy zawiera program:
+
+main.c - Plik implementuje alogrytm piekarni. Sprawdza także poprawność algorytmu poprzez dodawanie 1 do globalej zmiennej.
+
+---
+
+- # Jak uruchomic programy:
+
+Katalog zawiera program Makefile do kompilacji, linkowania i uruchamiania powyzszych programow, a takze czyszczenia katalogu i jego archiwizacji.
+
+-> Aby uruchomic pierwszy program, nalezy wykonac komende: make run
+
+-> Aby wyczyscic zawartosc katalogu (usunac zbedne pliki), nalezy wykonac: make clean
+
+-> W celu archiwizacji oraz kompresji katalogu nalezy wykonac: make tar
+
+========================================================================

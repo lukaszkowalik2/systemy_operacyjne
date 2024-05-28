@@ -18,7 +18,7 @@ void gotoxy(unsigned x, unsigned y) {
 }
 
 void* thread_function(void* arg) {
-  int thread_id = (int)arg;
+  int thread_id = *((int*)arg);
 
   for (int i = 0; i < ITERATIONS; i++) {
     pthread_mutex_lock(&mutex);
@@ -36,9 +36,8 @@ void* thread_function(void* arg) {
     pthread_mutex_lock(&mutex);
     gotoxy(XMAX, thread_id + 1);
     printf("Wątek %d: sekcja krytyczna\n", thread_id + 1);
-    pthread_mutex_unlock(&mutex);
-    sleep(1);
     counter++;
+    sleep(1);
 
     int unlock_result = pthread_mutex_unlock(&mutex);
     if (unlock_result != 0) {
