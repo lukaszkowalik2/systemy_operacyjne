@@ -19,7 +19,6 @@ void gotoxy(unsigned x, unsigned y) {
 
 void* thread_function(void* arg) {
   int thread_id = *((int*)arg);
-  int private_counter = 0;
 
   for (int i = 0; i < ITERATIONS; i++) {
     gotoxy(1, thread_id + 1);

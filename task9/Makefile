@@ -2,7 +2,7 @@ OUTPUT_DIR = output
 CC = gcc
 CFLAGS = -Wall -pedantic -O 
 DIR = $(notdir $(CURDIR))
-OUTPUT_TAR = Zadanie4.tar.gz
+OUTPUT_TAR = Zadanie9.tar.gz
 
 SOURCES = main.c
 EXECUTABLES = $(SOURCES:%.c=$(OUTPUT_DIR)/%)
