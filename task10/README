@@ -4,7 +4,8 @@
 
 ## Katalog programy zawiera program:
 
-main.c - Plik implementuje alogrytm piekarni. Sprawdza także poprawność algorytmu poprzez dodawanie 1 do globalej zmiennej.
+main.c - Plik implementuje algorytm piekarnia do synchronizacji wątków w środowisku wielowątkowym. Program tworzy pięć wątków, z których każdy wykonuje trzy iteracje sekcji krytycznej i prywatnej, korzystając z tablic `tickets` i `choosing` do zapewnienia, że tylko jeden wątek naraz znajduje się w
+sekcji krytycznej. Program wyświetla status każdego wątku na ekranie oraz sumuje wartość wspólnego licznika, aby zweryfikować poprawność działania algorytmu.
 
 ---
 
